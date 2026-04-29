@@ -1,0 +1,364 @@
+:root {
+  --bg-primary: #050505;
+  --bg-secondary: #0a0a0a;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --accent: #00f3ff;
+  --border-dim: #1a1a1a;
+  --border-bright: #333333;
+  --font-main: 'Inter', sans-serif;
+  --font-tech: 'Roboto Mono', monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tech-grid-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+header {
+  margin-bottom: 5rem;
+  padding-top: 2rem;
+}
+
+.header-line {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  margin-bottom: 1rem;
+}
+
+.logo {
+  font-family: var(--font-tech);
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  color: var(--text-primary);
+}
+
+.version {
+  font-size: 0.7rem;
+  background: var(--accent);
+  color: #000;
+  padding: 2px 5px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.subtitle {
+  font-family: var(--font-tech);
+  font-size: 0.8rem;
+  color: var(--accent);
+  letter-spacing: 0.2em;
+}
+
+/* Gallery Stack */
+.gallery-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10rem;
+}
+
+/* Product Item */
+.product-item {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.viewer-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-dim);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.content-frame {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  cursor: pointer;
+}
+
+model-viewer, .measure-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.measure-image {
+  object-fit: contain;
+  background: #000;
+  padding: 1rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.measure-image.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Nav Controls */
+.nav-arrows {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  z-index: 10;
+}
+
+.arrow-btn {
+  background: #000;
+  border: 1px solid var(--border-dim);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--accent);
+  transition: all 0.2s ease;
+}
+
+.arrow-btn:hover {
+  background: var(--accent);
+  color: #000;
+}
+
+/* AR Button */
+.ar-button {
+  background: var(--bg-primary);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.6rem 1rem;
+  font-family: var(--font-tech);
+  font-size: 0.7rem;
+  cursor: pointer;
+  z-index: 20;
+}
+
+/* Product Info */
+.product-info {
+  border-left: 2px solid var(--border-dim);
+  padding-left: 2rem;
+}
+
+.product-info h2 {
+  font-family: var(--font-tech);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+.product-info .description {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+.specs {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.spec-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.spec-label {
+  font-family: var(--font-tech);
+  font-size: 0.7rem;
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+
+.spec-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Admin Section */
+.admin-section {
+  margin-top: 10rem;
+  border-top: 1px solid var(--border-dim);
+  padding-top: 2rem;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: center;
+}
+
+#toggle-admin {
+  background: transparent;
+  border: 1px dashed var(--accent);
+  color: var(--accent);
+  padding: 0.5rem 2rem;
+  font-family: var(--font-tech);
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+#toggle-admin:hover {
+  opacity: 1;
+  background: rgba(0, 243, 255, 0.05);
+}
+
+.admin-panel {
+  max-width: 600px;
+  margin: 2rem auto;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-dim);
+  padding: 2rem;
+}
+
+.admin-panel h2 {
+  font-family: var(--font-tech);
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border-dim);
+  padding-bottom: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-family: var(--font-tech);
+  font-size: 0.7rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+}
+
+.form-group input, .form-group textarea {
+  width: 100%;
+  background: #000;
+  border: 1px solid var(--border-dim);
+  color: #fff;
+  padding: 0.8rem;
+  font-family: var(--font-main);
+}
+
+.form-group input:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.submit-btn {
+  width: 100%;
+  background: var(--accent);
+  color: #000;
+  border: none;
+  padding: 1rem;
+  font-family: var(--font-tech);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Fullscreen Overlay */
+.fullscreen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.fs-controls {
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.fs-btn {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.fs-viewer-container {
+  flex-grow: 1;
+}
+
+.hidden {
+  display: none !important;
+}
+
+footer {
+  margin-top: 5rem;
+  padding: 2rem;
+  border-top: 1px solid var(--border-dim);
+}
+
+.terminal-footer {
+  font-family: var(--font-tech);
+  font-size: 0.7rem;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .product-item {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .product-info {
+    border-left: none;
+    border-top: 2px solid var(--border-dim);
+    padding-left: 0;
+    padding-top: 2rem;
+  }
+}
