@@ -45,6 +45,7 @@ function createProjectItem(project) {
       exposure="${project.exposure || 0.7}"
       shadow-intensity="${project.shadowIntensity || 2}"
       style="background-color: ${project.bgColor || '#000'};"
+      crossorigin="anonymous"
       ${project.extraAttributes || ''}
     >
       <button slot="ar-button" class="ar-button">VIEW IN AR [MOBILE]</button>
@@ -154,6 +155,7 @@ function openFullscreen(url, type, extraAttributes = '', exposure = 0.7, shadowI
         exposure="${exposure}"
         shadow-intensity="${shadowIntensity}"
         environment-image="neutral"
+        crossorigin="anonymous"
         ${extraAttributes}
       ></model-viewer>
     `;
