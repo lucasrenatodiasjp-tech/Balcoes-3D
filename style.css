@@ -201,6 +201,38 @@ model-viewer, .measure-image {
   color: #000;
 }
 
+/* Hotspots */
+[slot^="hotspot"] {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.HotspotAnnotation {
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  color: rgba(0, 0, 0, 0.8);
+  display: block;
+  font-family: var(--font-tech);
+  font-size: 12px;
+  font-weight: 700;
+  left: calc(100% + 1em);
+  max-width: 128px;
+  overflow-wrap: break-word;
+  padding: 0.5em 1em;
+  position: absolute;
+  top: 50%;
+  width: max-content;
+  transform: translateY(-50%);
+}
+
 /* Product Info */
 .product-info {
   border-left: 2px solid var(--border-dim);

@@ -42,13 +42,16 @@ function createProjectItem(project) {
       ar
       ar-modes="webxr scene-viewer quick-look"
       environment-image="neutral"
+      tone-mapping="neutral"
       exposure="${project.exposure || 0.7}"
-      shadow-intensity="${project.shadowIntensity || 2}"
+      shadow-intensity="${project.shadowIntensity || 1}"
+      shadow-softness="${project.shadowSoftness || 1}"
       style="background-color: ${project.bgColor || '#000'};"
       crossorigin="anonymous"
       ${project.extraAttributes || ''}
     >
       <button slot="ar-button" class="ar-button">VIEW IN AR [MOBILE]</button>
+      ${project.hotspots || ''}
     </model-viewer>
   `;
 
@@ -117,7 +120,7 @@ function createProjectItem(project) {
   expandBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     if (show3D) {
-      openFullscreen(project.modelUrl, '3d', project.extraAttributes, project.exposure, project.shadowIntensity, project.bgColor);
+      openFullscreen(project.modelUrl, '3d', project.extraAttributes, project.exposure, project.shadowIntensity, project.bgColor, project.shadowSoftness, project.hotspots);
     } else {
       openFullscreen(project.imageUrl, 'image');
     }
@@ -145,7 +148,7 @@ const fsOverlay = document.getElementById('fullscreen-overlay');
 const fsContainer = document.getElementById('fs-container');
 const closeFs = document.getElementById('close-fs');
 
-function openFullscreen(url, type, extraAttributes = '', exposure = 0.7, shadowIntensity = 2, bgColor = '#000') {
+function openFullscreen(url, type, extraAttributes = '', exposure = 0.7, shadowIntensity = 1, bgColor = '#000', shadowSoftness = 1, hotspots = '') {
   if (type === '3d') {
     fsContainer.innerHTML = `
       <model-viewer 
@@ -154,10 +157,14 @@ function openFullscreen(url, type, extraAttributes = '', exposure = 0.7, shadowI
         style="width: 100%; height: 100%; background-color: ${bgColor};"
         exposure="${exposure}"
         shadow-intensity="${shadowIntensity}"
+        shadow-softness="${shadowSoftness}"
         environment-image="neutral"
+        tone-mapping="neutral"
         crossorigin="anonymous"
         ${extraAttributes}
-      ></model-viewer>
+      >
+        ${hotspots}
+      </model-viewer>
     `;
   } else {
     fsContainer.innerHTML = `
@@ -268,6 +275,8 @@ addForm.addEventListener('submit', async (e) => {
       extraAttributes,
       exposure,
       shadowIntensity,
+      shadowSoftness: parseFloat(document.getElementById('p-softness').value),
+      hotspots: document.getElementById('p-hotspots').value,
       bgColor,
       updatedAt: new Date().toISOString()
     };
