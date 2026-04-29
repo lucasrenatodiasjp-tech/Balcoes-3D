@@ -80,6 +80,18 @@
               <label>SHADOW SOFTNESS (MACIEZ): <span class="soft-val">1</span></label>
               <input type="range" id="p-softness" min="0" max="1" step="0.1" value="1">
             </div>
+            <div class="form-group" style="flex-direction: row; align-items: center; gap: 10px;">
+              <input type="checkbox" id="p-lock-zoom" style="width: auto;">
+              <label style="margin-bottom: 0;">TRAVAR ZOOM (DESATIVAR SCROLL)</label>
+            </div>
+            <div class="form-group">
+              <label>AMBIENTE (LUZ / REFLEXO)</label>
+              <select id="p-env">
+                <option value="neutral">NEUTRAL (SUAVE)</option>
+                <option value="legacy">ESTÚDIO (BRILHANTE)</option>
+              </select>
+              <small>Use "Estúdio" para balcões brancos brilharem mais.</small>
+            </div>
             <div class="form-group">
               <label>HOTSPOTS (ETIQUETAS 3D)</label>
               <textarea id="p-hotspots" placeholder='Cole os botões <button slot="hotspot-..." do editor...'></textarea>

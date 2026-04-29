@@ -41,13 +41,14 @@ function createProjectItem(project) {
       camera-controls 
       ar
       ar-modes="webxr scene-viewer quick-look"
-      environment-image="neutral"
+      environment-image="${project.environment || 'neutral'}"
       tone-mapping="neutral"
       exposure="${project.exposure || 0.7}"
       shadow-intensity="${project.shadowIntensity || 1}"
       shadow-softness="${project.shadowSoftness || 1}"
       style="background-color: ${project.bgColor || '#000'};"
       crossorigin="anonymous"
+      ${project.disableZoom ? 'disable-zoom' : ''}
       ${project.extraAttributes || ''}
     >
       <button slot="ar-button" class="ar-button">VIEW IN AR [MOBILE]</button>
@@ -120,7 +121,7 @@ function createProjectItem(project) {
   expandBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     if (show3D) {
-      openFullscreen(project.modelUrl, '3d', project.extraAttributes, project.exposure, project.shadowIntensity, project.bgColor, project.shadowSoftness, project.hotspots);
+      openFullscreen(project.modelUrl, '3d', project.extraAttributes, project.exposure, project.shadowIntensity, project.bgColor, project.shadowSoftness, project.hotspots, project.disableZoom, project.environment);
     } else {
       openFullscreen(project.imageUrl, 'image');
     }
@@ -148,7 +149,7 @@ const fsOverlay = document.getElementById('fullscreen-overlay');
 const fsContainer = document.getElementById('fs-container');
 const closeFs = document.getElementById('close-fs');
 
-function openFullscreen(url, type, extraAttributes = '', exposure = 0.7, shadowIntensity = 1, bgColor = '#000', shadowSoftness = 1, hotspots = '') {
+function openFullscreen(url, type, extraAttributes = '', exposure = 0.7, shadowIntensity = 1, bgColor = '#000', shadowSoftness = 1, hotspots = '', disableZoom = false, environment = 'neutral') {
   if (type === '3d') {
     fsContainer.innerHTML = `
       <model-viewer 
@@ -158,9 +159,10 @@ function openFullscreen(url, type, extraAttributes = '', exposure = 0.7, shadowI
         exposure="${exposure}"
         shadow-intensity="${shadowIntensity}"
         shadow-softness="${shadowSoftness}"
-        environment-image="neutral"
+        environment-image="${environment}"
         tone-mapping="neutral"
         crossorigin="anonymous"
+        ${disableZoom ? 'disable-zoom' : ''}
         ${extraAttributes}
       >
         ${hotspots}
@@ -202,11 +204,13 @@ function populateFormForEdit(project) {
   document.getElementById('p-measures').value = project.measures;
   document.getElementById('p-glb-url').value = project.modelUrl;
   document.getElementById('p-img-url').value = project.imageUrl;
-  document.getElementById('p-extra').value = project.extraAttributes || '';
   document.getElementById('p-exposure').value = project.exposure || 0.7;
-  document.getElementById('p-shadow').value = project.shadowIntensity || 2;
+  document.getElementById('p-shadow').value = project.shadowIntensity || 1;
+  document.getElementById('p-softness').value = project.shadowSoftness || 1;
+  document.getElementById('p-lock-zoom').checked = project.disableZoom || false;
+  document.getElementById('p-env').value = project.environment || "neutral";
   document.getElementById('p-bgcolor').value = project.bgColor || "#0a0a0a";
-  
+  document.getElementById('p-hotspots').value = project.hotspots || '';
   document.querySelector('.exp-val').innerText = project.exposure || 0.7;
   document.querySelector('.shd-val').innerText = project.shadowIntensity || 2;
 
@@ -276,6 +280,8 @@ addForm.addEventListener('submit', async (e) => {
       exposure,
       shadowIntensity,
       shadowSoftness: parseFloat(document.getElementById('p-softness').value),
+      disableZoom: document.getElementById('p-lock-zoom').checked,
+      environment: document.getElementById('p-env').value,
       hotspots: document.getElementById('p-hotspots').value,
       bgColor,
       updatedAt: new Date().toISOString()
